@@ -76,14 +76,12 @@ int insertNode(int pos, int value){
    current->next = node;
 
    if(head == current)
-      head = node;
+      head = current;
    if(tail == current)
-      tail =node;
+      tail =current;
 
    return 1;
 }
-
-//Print node
 
 //Print list
 void printList (Node *node){
@@ -98,7 +96,7 @@ void printList (Node *node){
 void printMenu (){
    printf("\t1. Add new node\n");
    printf("\t2. Delete node\n");
-   printf("\t3. Append node\n");
+   printf("\t3. Insert node\n");
    printf("\t4. Print list\n");
    printf("\t5. Exit\n");
 }
