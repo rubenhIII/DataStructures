@@ -9,6 +9,7 @@ typedef struct {
 } Node;
 
 Node *head = NULL;
+Node *tail = NULL;
 
 //Add new node
 Node *addNode (int value){
@@ -23,6 +24,7 @@ Node *addNode (int value){
    }
    else{
       current->next = head;
+      tail = head;
       head = current;
    }
 
@@ -30,8 +32,58 @@ Node *addNode (int value){
 }
 
 //Delete node
+int deleteNode(){
+   if (head->next == NULL){
+      //It is the unique node
+      head = NULL;
+      return 1;
+   }
+   else{
+      //Remove head node from the list
+      Node *current = malloc(sizeof(Node));
+      if(current == NULL)
+         return 0;
+      current = head->next;
+      free(head);
+      head = current;
+      return 1;
+   }
+}
 
-//Append node
+//Insert node from head
+int insertNode(int pos, int value){
+   int counter = pos;
+   Node *current = malloc(sizeof(Node));
+   if(current == NULL)
+         return 0;
+
+   current = head;
+   while(current!=NULL && counter>0){
+      counter--;
+      current = current->next;
+   }
+   if(current == NULL){
+      printf("Position out of the range of the list!");
+      return 0;
+   }
+   Node *node = malloc(sizeof(Node));
+   if(node == NULL)
+         return 0;
+
+   node->value = current->value;
+   current->value = value;
+   node->next = current->next;
+   current->next = node;
+
+   if(head == current)
+      head = node;
+   if(tail == current)
+      tail =node;
+
+   return 1;
+}
+
+//Print node
 
 //Print list
 void printList (Node *node){
@@ -67,10 +119,27 @@ int main (){
             printf("Node creation failed!\n");
          break;
       case 2:
-         /* code */
+         if (head == NULL){
+            printf("The list is empty!\n");
+            break;
+         }
+         if (!deleteNode())
+            printf("Node deletion failed!\n");
          break;
       case 3:
-         /* code */
+         if (head == NULL){
+            printf("The list is empty!\n");
+            break;
+         }
+         int nodePos;
+         printf("Node value: ");
+         scanf("%d", &nodeVal);
+         printf("Node position: ");
+         scanf("%d", &nodePos);
+         if(!insertNode(nodePos, nodeVal)){
+            printf("Node insertion failed!");
+         }
+
          break;
       case 4:
          printList(head);
