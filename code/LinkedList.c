@@ -1,4 +1,4 @@
-//Linked List implementation
+//Single linked list implementation
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -83,6 +83,24 @@ int insertNode(int pos, int value){
    return 1;
 }
 
+//Search value
+int searchForward(int value){
+   Node *current = malloc(sizeof(Node));
+   if(current == NULL)
+         return 0;
+
+   current = head;
+   while(current!=NULL && value!=current->value){
+      current = current->next;
+   }
+   if(current == NULL){
+      printf("Value not found!\n");
+      return 0;
+   }
+   printf("Value found!\n");
+   return 1;
+}
+
 //Print list
 void printList (Node *node){
    while(node != NULL){
@@ -97,13 +115,14 @@ void printMenu (){
    printf("\t1. Add new node\n");
    printf("\t2. Delete node\n");
    printf("\t3. Insert node\n");
-   printf("\t4. Print list\n");
-   printf("\t5. Exit\n");
+   printf("\t4. Search value\n");
+   printf("\t5. Print list\n");
+   printf("\t6. Exit\n");
 }
 
 int main (){
    int menuResp = 1, readSize, nodeVal;
-   while (menuResp != 5 && menuResp > 0 && menuResp <=5){
+   while (menuResp != 6 && menuResp > 0 && menuResp <=5){
       printMenu();
       readSize = scanf("%d", &menuResp);
       if (readSize > 1)
@@ -137,9 +156,17 @@ int main (){
          if(!insertNode(nodePos, nodeVal)){
             printf("Node insertion failed!");
          }
-
          break;
       case 4:
+         if (head == NULL){
+            printf("The list is empty!\n");
+            break;
+         }
+         printf("Node value: ");
+         scanf("%d", &nodeVal);
+         searchForward(nodeVal);
+         break;
+      case 5:
          printList(head);
          break;
       }
